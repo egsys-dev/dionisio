@@ -1,0 +1,19 @@
+name: dionisio
+description: A new Flutter project.
+
+publish_to: 'dionisio'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+    
+  dio: ^4.0.0-beta7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

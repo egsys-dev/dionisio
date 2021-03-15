@@ -1,0 +1,1 @@
+typedef HttpTransformer<T> = T Function(Map<String, dynamic> dataIn);
