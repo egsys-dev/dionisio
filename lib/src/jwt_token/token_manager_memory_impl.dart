@@ -7,7 +7,9 @@ class TokenManagerMemoryImpl implements TokenManager {
   Future<SessionToken?> getSessionToken() => Future.value(_sessionToken);
 
   @override
-  Future<void> saveSessionToken(SessionToken? sessionToken) async {
-    _sessionToken = sessionToken;
-  }
+  Future<void> saveSessionToken(SessionToken sessionToken) async =>
+      _sessionToken = sessionToken;
+
+  @override
+  Future<void> clear() async => _sessionToken = null;
 }
