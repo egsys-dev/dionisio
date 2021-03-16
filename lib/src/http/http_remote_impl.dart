@@ -68,7 +68,7 @@ class HttpRemoteImpl implements HttpRemote {
               'Token ativo, porém TokenManager não definido');
         }
 
-        var sessionToken = await tokenManager.sessionToken;
+        var sessionToken = await tokenManager.getSessionToken();
         final tokenExpired = sessionToken?.tokenExpired ?? true;
 
         if (tokenExpired) {
