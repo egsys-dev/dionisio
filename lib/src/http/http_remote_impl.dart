@@ -23,6 +23,7 @@ class HttpRemoteImpl implements HttpRemote {
 
     try {
       DateTime requestInit = DateTime.now();
+
       Response<dynamic> response = await _httpDio.request<dynamic>(
         request.endpoint,
         data: request.params,
@@ -81,6 +82,7 @@ class HttpRemoteImpl implements HttpRemote {
 
         requestOptions.headers["Authorization"] =
             "Bearer ${sessionToken.token}";
+        return;
       };
 
   /// Verifica se o erro que veio da API é um erro não tratado.

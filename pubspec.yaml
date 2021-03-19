@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
     
-  dio: ^4.0.0-beta7
+  dio: 4.0.0-beta7
 
 dev_dependencies:
   flutter_test:
