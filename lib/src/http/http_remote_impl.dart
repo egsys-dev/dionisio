@@ -77,7 +77,7 @@ class HttpRemoteImpl implements HttpRemote {
         }
 
         if (sessionToken == null) {
-          throw UnimplementedError('Não foi possível resolver o SessionToken');
+          return;
         }
 
         requestOptions.headers["Authorization"] =
