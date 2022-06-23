@@ -7,5 +7,6 @@ export 'src/options/http_options.dart';
 export 'src/options/http_transformer.dart';
 export 'src/request/method.dart';
 export 'src/request/request_model.dart';
+export 'src/request/request_model_raw.dart';
 export 'src/helpers/helpers.dart';
 export 'src/extensions/extensions.dart';
