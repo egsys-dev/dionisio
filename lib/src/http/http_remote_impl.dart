@@ -39,10 +39,52 @@ class HttpRemoteImpl implements HttpRemote {
       final requestTime = requestDone.difference(requestInit).inMilliseconds;
 
       if (_httpOptions.logRequestEnabled) {
-        print('ENDPOINT => ${request.endpoint}\n'
-            'METHOD => ${request.methodString}\n'
-            'STATUS => ${response.data['status']}\n'
-            'TIME => $requestTime');
+        print(
+          'ENDPOINT => ${request.endpoint}\n'
+          'METHOD => ${request.methodString}\n'
+          'STATUS => ${response.data['status']}\n'
+          'TIME => $requestTime',
+        );
+      }
+
+      final data = response.data as Map<String, dynamic>;
+      return _httpOptions.responseTransfomer(data);
+    } on DioError catch (error, _) {
+      if (_isErroInesperado(error)) {
+        rethrow;
+      }
+
+      return error.response?.data as Map<String, dynamic>;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> doRequestRaw(RequestModelRaw request) async {
+    try {
+      DateTime requestInit = DateTime.now();
+
+      Response<dynamic> response = await _httpDio.request<dynamic>(
+        request.endpoint,
+        data: request.params,
+        queryParameters: request.queryParameters,
+        options: Options(
+          method: request.methodString,
+          sendTimeout: _httpDio.options.sendTimeout,
+          headers: request.headers,
+        ),
+      );
+
+      DateTime requestDone = DateTime.now();
+
+      final requestTime = requestDone.difference(requestInit).inMilliseconds;
+
+      if (_httpOptions.logRequestEnabled) {
+        print(
+          'ENDPOINT => ${request.endpoint}\n'
+          'METHOD => ${request.methodString}\n'
+          'STATUS => ${response.data['status']}\n'
+          'TIME => $requestTime',
+        );
       }
 
       final data = response.data as Map<String, dynamic>;
