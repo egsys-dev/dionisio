@@ -19,9 +19,9 @@ class ResponseModel {
 
   factory ResponseModel.fromMap(Map<String, dynamic> map) {
     return ResponseModel(
-      status: map['status'],
+      status: map['status'] ?? '',
+      params: map['params'] ?? null,
       message: map['message'],
-      params: map['params'],
     );
   }
 
