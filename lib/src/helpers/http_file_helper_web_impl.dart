@@ -32,7 +32,7 @@ class DioHttpFileHelperWebImpl implements HttpFileHelper {
       required String path,
       Uint8List? bytes}) {
     if (bytes == null) {
-      throw NullThrownError();
+      throw Exception();
     }
 
     return MultipartFile.fromBytes(
