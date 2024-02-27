@@ -1,8 +1,12 @@
 enum Method {
-  POST,
-  GET,
-  PUT,
-  DELETE,
-  PATCH,
-  HEAD,
+  POST('POST'),
+  GET('GET'),
+  PUT('PUT'),
+  DELETE('DELETE'),
+  PATCH('PATCH'),
+  HEAD('HEAD');
+
+  final String value;
+
+  const Method(this.value);
 }
