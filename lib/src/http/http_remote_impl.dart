@@ -1,5 +1,7 @@
-import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:dionisio/dionisio.dart';
+import 'package:dio/dio.dart';
+import 'dart:developer';
 
 class HttpRemoteImpl implements HttpRemote {
   final HttpOptions _httpOptions;
@@ -29,7 +31,7 @@ class HttpRemoteImpl implements HttpRemote {
         data: request.params,
         queryParameters: request.queryParameters,
         options: Options(
-          method: request.methodString,
+          method: request.method.value,
           sendTimeout: _httpDio.options.sendTimeout,
         ),
       );
@@ -41,7 +43,7 @@ class HttpRemoteImpl implements HttpRemote {
       if (_httpOptions.logRequestEnabled) {
         print(
           'ENDPOINT => ${request.endpoint}\n'
-          'METHOD => ${request.methodString}\n'
+          'METHOD => ${request.method.value}\n'
           'STATUS => ${response.data['status']}\n'
           'TIME => $requestTime',
         );
@@ -51,6 +53,10 @@ class HttpRemoteImpl implements HttpRemote {
       return _httpOptions.responseTransfomer(data);
     } on DioError catch (error, _) {
       if (_isErroInesperado(error)) {
+        if (kDebugMode) {
+          log(error.message);
+        }
+
         rethrow;
       }
 
@@ -91,6 +97,10 @@ class HttpRemoteImpl implements HttpRemote {
       return _httpOptions.responseTransfomer(data);
     } on DioError catch (error, _) {
       if (_isErroInesperado(error)) {
+        if (kDebugMode) {
+          log(error.message);
+        }
+
         rethrow;
       }
 

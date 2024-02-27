@@ -15,22 +15,89 @@ class RequestModel {
     this.tokenEnabled = true,
   });
 
-  String get methodString {
-    switch (method) {
-      case Method.POST:
-        return "POST";
-      case Method.GET:
-        return "GET";
-      case Method.PUT:
-        return "PUT";
-      case Method.DELETE:
-        return "DELETE";
-      case Method.PATCH:
-        return "PATCH";
-      case Method.HEAD:
-        return "HEAD";
-      default:
-        throw UnimplementedError("Method not found");
-    }
+  RequestModel.post({
+    required String endpoint,
+    dynamic params,
+    dynamic queryParameters,
+    bool tokenEnabled = true,
+  })  : endpoint = endpoint,
+        method = Method.POST,
+        params = params,
+        queryParameters = queryParameters,
+        tokenEnabled = tokenEnabled;
+
+  RequestModel.get({
+    required String endpoint,
+    dynamic params,
+    dynamic queryParameters,
+    bool tokenEnabled = true,
+  })  : endpoint = endpoint,
+        method = Method.GET,
+        params = params,
+        queryParameters = queryParameters,
+        tokenEnabled = tokenEnabled;
+
+  RequestModel.put({
+    required String endpoint,
+    dynamic params,
+    dynamic queryParameters,
+    bool tokenEnabled = true,
+  })  : endpoint = endpoint,
+        method = Method.PUT,
+        params = params,
+        queryParameters = queryParameters,
+        tokenEnabled = tokenEnabled;
+
+  RequestModel.delete({
+    required String endpoint,
+    dynamic params,
+    dynamic queryParameters,
+    bool tokenEnabled = true,
+  })  : endpoint = endpoint,
+        method = Method.DELETE,
+        params = params,
+        queryParameters = queryParameters,
+        tokenEnabled = tokenEnabled;
+
+  RequestModel.patch({
+    required String endpoint,
+    dynamic params,
+    dynamic queryParameters,
+    bool tokenEnabled = true,
+  })  : endpoint = endpoint,
+        method = Method.PATCH,
+        params = params,
+        queryParameters = queryParameters,
+        tokenEnabled = tokenEnabled;
+
+  RequestModel.head({
+    required String endpoint,
+    dynamic params,
+    dynamic queryParameters,
+    bool tokenEnabled = true,
+  })  : endpoint = endpoint,
+        method = Method.HEAD,
+        params = params,
+        queryParameters = queryParameters,
+        tokenEnabled = tokenEnabled;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'endpoint': endpoint,
+      'method': method.value,
+      'params': params,
+      'queryParameters': queryParameters,
+      'tokenEnabled': tokenEnabled,
+    };
+  }
+
+  factory RequestModel.fromMap(Map<String, dynamic> map) {
+    return RequestModel(
+      endpoint: map['endpoint'],
+      method: Method.values.firstWhere((e) => e.value == map['method']),
+      params: map['params'],
+      queryParameters: map['queryParameters'],
+      tokenEnabled: map['tokenEnabled'],
+    );
   }
 }
