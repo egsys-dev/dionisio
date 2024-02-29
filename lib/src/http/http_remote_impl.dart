@@ -74,7 +74,7 @@ class HttpRemoteImpl implements HttpRemote {
         data: request.params,
         queryParameters: request.queryParameters,
         options: Options(
-          method: request.methodString,
+          method: request.method.value,
           sendTimeout: _httpDio.options.sendTimeout,
           headers: request.headers,
         ),
@@ -87,7 +87,7 @@ class HttpRemoteImpl implements HttpRemote {
       if (_httpOptions.logRequestEnabled) {
         print(
           'ENDPOINT => ${request.endpoint}\n'
-          'METHOD => ${request.methodString}\n'
+          'METHOD => ${request.method.value}\n'
           'STATUS => ${response.data['status']}\n'
           'TIME => $requestTime',
         );
