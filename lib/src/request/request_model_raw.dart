@@ -15,22 +15,23 @@ class RequestModelRaw {
     this.headers,
   });
 
-  String get methodString {
-    switch (method) {
-      case Method.POST:
-        return "POST";
-      case Method.GET:
-        return "GET";
-      case Method.PUT:
-        return "PUT";
-      case Method.DELETE:
-        return "DELETE";
-      case Method.PATCH:
-        return "PATCH";
-      case Method.HEAD:
-        return "HEAD";
-      default:
-        throw UnimplementedError("Method not found");
-    }
+  Map<String, dynamic> toMap() {
+    return {
+      'endpoint': endpoint,
+      'method': method.value,
+      'params': params,
+      'queryParameters': queryParameters,
+      'headers': headers,
+    };
+  }
+
+  factory RequestModelRaw.fromMap(Map<String, dynamic> map) {
+    return RequestModelRaw(
+      endpoint: map['endpoint'] ?? '',
+      method: Method.values.firstWhere((e) => e.value == map['method']),
+      params: map['params'] ?? null,
+      queryParameters: map['queryParameters'] ?? null,
+      headers: Map<String, dynamic>.from(map['headers']),
+    );
   }
 }
