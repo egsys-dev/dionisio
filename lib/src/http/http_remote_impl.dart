@@ -60,7 +60,10 @@ class HttpRemoteImpl implements HttpRemote {
         rethrow;
       }
 
-      return error.response?.data as Map<String, dynamic>;
+      return _httpOptions.responseTransfomerError(
+        error.response?.data as Map<String, dynamic>,
+        error.response?.statusCode,
+      );
     }
   }
 
@@ -104,7 +107,10 @@ class HttpRemoteImpl implements HttpRemote {
         rethrow;
       }
 
-      return error.response?.data as Map<String, dynamic>;
+      return _httpOptions.responseTransfomerError(
+        error.response?.data as Map<String, dynamic>,
+        error.response?.statusCode,
+      );
     }
   }
 
@@ -118,7 +124,8 @@ class HttpRemoteImpl implements HttpRemote {
         final tokenManager = _httpOptions.tokenManager;
         if (tokenManager == null) {
           throw UnimplementedError(
-              'Token ativo, porém TokenManager não definido');
+            'Token ativo, porém TokenManager não definido',
+          );
         }
 
         var sessionToken = await tokenManager.getSessionToken();
