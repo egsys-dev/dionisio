@@ -8,4 +8,5 @@ abstract class HttpOptions implements BaseOptions {
   String? get refreshEndpoint;
   bool get logRequestEnabled => false;
   HttpTransformer<Map<String, dynamic>> get responseTransfomer;
+  HttpTransformerError<Future<Map<String, dynamic>>> get responseTransfomerError;
 }
