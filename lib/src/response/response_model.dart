@@ -4,11 +4,13 @@ class ResponseModel {
   final String status;
   final dynamic params;
   final String? message;
+  final int? statusCode;
 
   ResponseModel({
     required this.status,
     required this.params,
     this.message,
+    this.statusCode,
   });
 
   static const success = 'success';
@@ -22,6 +24,7 @@ class ResponseModel {
       status: map['status'] ?? '',
       params: map['params'] ?? null,
       message: map['message'],
+      statusCode: map['statusCode'],
     );
   }
 
