@@ -33,6 +33,7 @@ class HttpRemoteImpl implements HttpRemote {
         options: Options(
           method: request.method.value,
           sendTimeout: _httpDio.options.sendTimeout,
+          contentType: request.contentType,
         ),
       );
 
