@@ -56,7 +56,7 @@ class HttpRemoteImpl implements HttpRemote {
       if (_isErroInesperado(error)) {
         if (kDebugMode) {
           log(error.message);
-          log(error.response?.data.toString());
+          log(error.response?.toString() ?? '');
         }
 
         rethrow;
@@ -104,7 +104,7 @@ class HttpRemoteImpl implements HttpRemote {
       if (_isErroInesperado(error)) {
         if (kDebugMode) {
           log(error.message);
-          log(error.response?.data.toString());
+          log(error.response?.toString() ?? '');
         }
 
         rethrow;
