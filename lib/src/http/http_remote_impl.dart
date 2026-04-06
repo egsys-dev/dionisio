@@ -77,6 +77,22 @@ class HttpRemoteImpl implements HttpRemote {
     try {
       DateTime requestInit = DateTime.now();
 
+      Map<String, dynamic> headers = {};
+
+      final requestHeaders = request.headers;
+      if (requestHeaders != null) {
+        headers.addAll(requestHeaders);
+      }
+
+      if (request.extraHeadersEnabled) {
+        final extraHeaders = await _httpOptions.extraHeaders;
+        if (extraHeaders != null) {
+          headers.addAll(extraHeaders);
+        }
+      }
+
+      headers.addAll(request.headers ?? {});
+
       Response<dynamic> response = await _httpDio.request<dynamic>(
         request.endpoint,
         data: request.params,
@@ -84,7 +100,7 @@ class HttpRemoteImpl implements HttpRemote {
         options: Options(
           method: request.method.value,
           sendTimeout: _httpDio.options.sendTimeout,
-          headers: request.headers,
+          headers: headers,
         ),
       );
 

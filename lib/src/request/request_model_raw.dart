@@ -6,6 +6,7 @@ class RequestModelRaw {
   final dynamic params;
   final dynamic queryParameters;
   final Map<String, dynamic>? headers;
+  final bool extraHeadersEnabled;
 
   RequestModelRaw({
     required this.endpoint,
@@ -13,6 +14,7 @@ class RequestModelRaw {
     this.params,
     this.queryParameters,
     this.headers,
+    this.extraHeadersEnabled = true,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,7 @@ class RequestModelRaw {
       'params': params,
       'queryParameters': queryParameters,
       'headers': headers,
+      'extraHeadersEnabled': extraHeadersEnabled,
     };
   }
 
@@ -34,6 +37,7 @@ class RequestModelRaw {
       headers: map['headers'] != null
           ? Map<String, dynamic>.from(map['headers'])
           : null,
+      extraHeadersEnabled: map['extraHeadersEnabled'] ?? true,
     );
   }
 }
