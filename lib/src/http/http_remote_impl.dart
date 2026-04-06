@@ -15,10 +15,13 @@ class HttpRemoteImpl implements HttpRemote {
 
   @override
   Future<Map<String, dynamic>> doRequest(RequestModel request) async {
-    if (!_httpDio.interceptors.contains(_onRequest) && request.tokenEnabled) {
+    if (!_httpDio.interceptors.contains(_onRequest)) {
       _httpDio.interceptors.add(
         InterceptorsWrapper(
-          onRequest: _onRequest,
+          onRequest: (requestOptions) => _onRequest(
+            requestOptions,
+            request,
+          ),
         ),
       );
     }
@@ -117,12 +120,20 @@ class HttpRemoteImpl implements HttpRemote {
     }
   }
 
-  dynamic Function(RequestOptions) get _onRequest =>
-      (RequestOptions requestOptions) async {
-        /// Se o token não estiver habilitado, apenas retorna
-        if (!_httpOptions.tokenEnabled) {
-          return;
+  dynamic Function(RequestOptions, RequestModel) get _onRequest =>
+      (RequestOptions requestOptions, RequestModel request) async {
+        final headers = request.headers;
+        if (headers != null) {
+          requestOptions.headers.addAll(headers);
         }
+
+        final extraHeaders = await _httpOptions.extraHeaders;
+        if (extraHeaders != null && request.extraHeadersEnabled) {
+          requestOptions.headers.addAll(extraHeaders);
+        }
+
+        /// Se o token não estiver habilitado, apenas retorna
+        if (!_httpOptions.tokenEnabled) return;
 
         final tokenManager = _httpOptions.tokenManager;
         if (tokenManager == null) {
@@ -132,18 +143,11 @@ class HttpRemoteImpl implements HttpRemote {
         }
 
         var sessionToken = await tokenManager.getSessionToken();
-        final tokenExpired = sessionToken?.tokenExpired ?? true;
+        if (sessionToken == null) return;
 
-        if (tokenExpired) {
-          /// Tratativa para refresg token
-        }
+        final authorization = {"Authorization": "Bearer ${sessionToken.token}"};
+        requestOptions.headers.addAll(authorization);
 
-        if (sessionToken == null) {
-          return;
-        }
-
-        requestOptions.headers["Authorization"] =
-            "Bearer ${sessionToken.token}";
         return;
       };
 
