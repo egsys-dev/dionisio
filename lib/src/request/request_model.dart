@@ -145,7 +145,7 @@ class RequestModel {
       tokenEnabled: map['tokenEnabled'],
       contentType: map['contentType'],
       headers: map['headers'],
-      extraHeadersEnabled: map['extraHeadersEnabled'],
+      extraHeadersEnabled: map['extraHeadersEnabled'] ?? true,
     );
   }
 }

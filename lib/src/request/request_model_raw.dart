@@ -34,9 +34,7 @@ class RequestModelRaw {
       method: Method.values.firstWhere((e) => e.value == map['method']),
       params: map['params'] ?? null,
       queryParameters: map['queryParameters'] ?? null,
-      headers: map['headers'] != null
-          ? Map<String, dynamic>.from(map['headers'])
-          : null,
+      headers: map['headers'],
       extraHeadersEnabled: map['extraHeadersEnabled'] ?? true,
     );
   }
