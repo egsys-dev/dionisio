@@ -61,8 +61,6 @@ class HttpRemoteImpl implements HttpRemote {
           log(error.message);
           log(error.response?.toString() ?? '');
         }
-
-        rethrow;
       }
 
       return _httpOptions.responseTransfomerError(
@@ -125,8 +123,6 @@ class HttpRemoteImpl implements HttpRemote {
           log(error.message);
           log(error.response?.toString() ?? '');
         }
-
-        rethrow;
       }
 
       return _httpOptions.responseTransfomerError(
