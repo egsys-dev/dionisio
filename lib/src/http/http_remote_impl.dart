@@ -169,4 +169,29 @@ class HttpRemoteImpl implements HttpRemote {
             error.type != DioErrorType.cancel) ||
         error.response?.statusCode == 500;
   }
+
+  @override
+  Future<Uint8List> doRequestBytes(String url) async {
+    try {
+      final response = await _httpDio.request(
+        url,
+        options: Options(
+          method: Method.GET.value,
+          responseType: ResponseType.bytes,
+          sendTimeout: _httpDio.options.sendTimeout,
+        ),
+      );
+
+      return Uint8List.fromList(response.data);
+    } on DioError catch (error, _) {
+      if (_isErroInesperado(error)) {
+        if (kDebugMode) {
+          log(error.message);
+          log(error.response?.toString() ?? '');
+        }
+      }
+
+      return Uint8List(0);
+    }
+  }
 }
