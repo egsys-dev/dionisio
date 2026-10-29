@@ -64,7 +64,7 @@ class HttpRemoteImpl implements HttpRemote {
       }
 
       return _httpOptions.responseTransfomerError(
-        error.response?.data as Map<String, dynamic>,
+        error.response?.data as Map<String, dynamic>?,
         error.response?.statusCode,
       );
     }
@@ -126,7 +126,7 @@ class HttpRemoteImpl implements HttpRemote {
       }
 
       return _httpOptions.responseTransfomerError(
-        error.response?.data as Map<String, dynamic>,
+        error.response?.data as Map<String, dynamic>?,
         error.response?.statusCode,
       );
     }
